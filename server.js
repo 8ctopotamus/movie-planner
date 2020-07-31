@@ -32,8 +32,21 @@ connection.connect(function(err) {
   console.log("connected as id " + connection.threadId);
 });
 
+// VIEW ROUTE
+app.get('/', (req, res) => {
+  connection.query('SELECT * FROM movies', (err, data) => {
+    res.render('index', { movies: data })
+  })
+})
 
-// ROUTES GO HERE
+
+// API ROUTES
+// GET
+// POST
+// PUT
+// DELTE
+
+
 
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`))
 
