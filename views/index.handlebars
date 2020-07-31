@@ -2,7 +2,10 @@
   <h1>Movies I want to Watch</h1>
   <ul>
     {{#each movies}}
-      <li>{{id}} - {{movie}}</li>
+      <li>
+        {{id}} - {{movie}} 
+        <button class="delete" data-movieid="{{id}}">&times;</button>
+      </li>
     {{/each}}
   </ul>
 
@@ -17,6 +20,7 @@
   $(document).ready(function() {
     const $newMovieInput = $('#new-movie-input')
     const $newMovieButton = $('#new-movie-button')
+    const $deleteButtons = $('.delete')
       
     $newMovieButton.on('click', () => {
       const newMovieText = $newMovieInput.val().trim()
@@ -28,5 +32,16 @@
       .then(() => location.reload())
       .catch(err => console.log(err))
     })
+
+    $deleteButtons.on('click', function() {
+      const id = $(this).data('movieid')
+
+      $.ajax(`/api/movies/${id}`, {
+        type: 'DELETE'
+      })
+      .then(() => location.reload())
+      .catch(err => console.log(err))
+    })
+
   })
 </script>

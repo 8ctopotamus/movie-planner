@@ -35,7 +35,6 @@ connection.connect(function(err) {
 // VIEW ROUTE
 app.get('/', (req, res) => {
   connection.query('SELECT * FROM movies', (err, data) => {
-    console.log(data)
     res.render('index', { movies: data })
   })
 })
@@ -56,12 +55,15 @@ app.post('/api/movies', (req, res) => {
 
 // PUT
 
-// DELTE
+// DELETE
 app.delete('/api/movies/:id', (req, res) => {
-  
+  const id = req.params.id
+  connection.query('DELETE FROM movies WHERE ?', { id }, (err, result) => {
+    if (err) throw err
+    // redirect to home route
+    res.status(200).send()
+  })
 })
-
-
 
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`))
 
