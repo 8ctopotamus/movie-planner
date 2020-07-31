@@ -5,4 +5,28 @@
       <li>{{id}} - {{movie}}</li>
     {{/each}}
   </ul>
+
+  <h2>Add a movie</h2>
+  <input id="new-movie-input" type="text" />
+  <button id="new-movie-button">Add movie</button>
+
+  <h2>Update movie</h2>
 </div>
+
+<script>
+  $(document).ready(function() {
+    const $newMovieInput = $('#new-movie-input')
+    const $newMovieButton = $('#new-movie-button')
+      
+    $newMovieButton.on('click', () => {
+      const newMovieText = $newMovieInput.val().trim()
+
+      $.ajax('/api/movies', {
+        type: 'POST',
+        data: { newMovieText }
+      })
+      .then(() => location.reload())
+      .catch(err => console.log(err))
+    })
+  })
+</script>

@@ -35,16 +35,31 @@ connection.connect(function(err) {
 // VIEW ROUTE
 app.get('/', (req, res) => {
   connection.query('SELECT * FROM movies', (err, data) => {
+    console.log(data)
     res.render('index', { movies: data })
   })
 })
 
-
 // API ROUTES
 // GET
+
 // POST
+app.post('/api/movies', (req, res) => {
+  const newMovieText = req.body.newMovieText
+  // insert into database
+  connection.query('INSERT INTO movies (movie) VALUES (?)', [newMovieText], (err, response) => {
+    if (err) throw err
+    // redirect to home route
+    res.status(200).send()
+  })
+})
+
 // PUT
+
 // DELTE
+app.delete('/api/movies/:id', (req, res) => {
+  
+})
 
 
 
